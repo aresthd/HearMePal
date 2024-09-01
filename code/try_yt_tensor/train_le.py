@@ -4,9 +4,10 @@ import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 from nltk_utils import tokenize, stem, bag_of_words
 from model import create_model
+import pickle
 
 # Open file json
-with open('tensorflow/intents.json', 'r') as f:
+with open('../../data/intents.json', 'r') as f:
     intents = json.load(f)
 
 # Define lists
@@ -63,15 +64,35 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
 model.fit(x_train, y_train, epochs=num_epochs, batch_size=batch_size, verbose=1)
 
 # Save model and metadata
-model.save('tensorflow/chat_model.h5')
+# model.save('tensorflow/chat_model.h5')
+# metadata = {
+#     'input_size': input_size,
+#     'output_size': output_size,
+#     'hidden_size': hidden_size,
+#     'all_words': all_words,
+#     'tags': tags,
+#     'label_encoder_classes': label_encoder.classes_.tolist()
+# }
+# with open('tf_metadata.json', 'w') as f:
+#     json.dump(metadata, f)
+# print('Training complete. Model and metadata saved.')
+
+
+# Save model and metadata
+with open('tf_model_le.pkl', 'wb') as f:
+    pickle.dump(model, f)
+    
 metadata = {
     'input_size': input_size,
     'output_size': output_size,
     'hidden_size': hidden_size,
     'all_words': all_words,
     'tags': tags,
+    # 'vectorizer_vocabulary': vectorizer.vocabulary_,
     'label_encoder_classes': label_encoder.classes_.tolist()
 }
-with open('tensorflow/metadata.json', 'w') as f:
+
+with open('tf_metadata_le.json', 'w') as f:
     json.dump(metadata, f)
 print('Training complete. Model and metadata saved.')
+
