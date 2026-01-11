@@ -182,7 +182,10 @@ def chat(conv=None):
     
     # User login and go to default conv
     elif conv == None and user_id != None:
-        conv = conversation.get_latest_conversation(user_id, 'active')['conversation_id']
+        conv = conversation.get_latest_conversation(user_id, 'active')
+        if conv == None:
+            return redirect(f"/new")
+        conv = conv['conversation_id']
         return redirect(f"/chat/{conv}")
     
     # User not login and go to default conv

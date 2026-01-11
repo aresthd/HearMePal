@@ -1,7 +1,7 @@
 import random
 import json
 import torch
-from model import NeuralNet
+# from model import NeuralNet
 from nltk_utils import bag_of_words, tokenize
 import pickle
 
@@ -45,6 +45,7 @@ print("\n Start load model-----")
 
 # Load model (.pth)
 model = torch.load(PATH_MODEL_PTH)
+print("\n Success load model-----")
 
 
 # Load the model (.pkl) and metadata (.json)
@@ -59,9 +60,9 @@ with open(PATH_METADATA, 'r') as f:
 print("\n Load metadata done-----")
 
 # Taking the parameter from metadata
-input_size = metadata['input_size']
-hidden_size = metadata['hidden_size']
-output_size = metadata['output_size']
+# input_size = metadata['input_size']
+# hidden_size = metadata['hidden_size']
+# output_size = metadata['output_size']
 all_words = metadata['all_words']
 tags = metadata['tags']
 
@@ -98,9 +99,12 @@ while True:
     probs = torch.softmax(output, dim=1)
     prob = probs[0][predicted.item()]
     
+    
+    
     # Checking the probability to threshold
     threshold = 0.25
-    print(f'prob : {prob.item()}')
+    print(f'prob : {prob}')
+    print(f'prob.items() : {prob.item()}')
     if prob.item() > threshold:    
         # Getting response from tag
         for intent in intents['intents']:

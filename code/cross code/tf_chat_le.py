@@ -28,9 +28,10 @@ input_size = metadata['input_size']
 all_words = metadata['all_words']
 tags = metadata['tags']
 label_encoder_classes = metadata['label_encoder_classes']
-# print(f"\n Starting load the vectorizer......\n")
-# vectorizer_vocabulary = metadata['vectorizer_vocabulary']
-# print(f"\n Finish load the vectorizer......\n")
+print(f"\n Starting load the vectorizer......\n")
+vectorizer_vocabulary = metadata.get('vectorizer_vocabulary', None)
+print(f"\n vectorizer_vocabulary : {vectorizer_vocabulary}")
+print(f"Finish load the vectorizer......\n")
 
 # Initialize LabelEncoder
 label_encoder = LabelEncoder()
@@ -60,6 +61,7 @@ while True:
     
     probs = tf.nn.softmax(output[0])
     prob = probs[predicted[0]]
+    
     
     threshold = 0.25
     print(f'prob : {prob}')

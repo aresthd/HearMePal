@@ -38,15 +38,22 @@ label_encoder = LabelEncoder()
 label_encoder.classes_ = np.array(label_encoder_classes)
 
 # Recreate the TfidfVectorizer and set its vocabulary
+print("\n Start recreate vectorizer-----")
 # vectorizer = TfidfVectorizer(tokenizer=tokenize, vocabulary=vectorizer_vocabulary)
-# vectorizer = TfidfVectorizer(tokenizer=tokenize,
-#                              min_df = 5,
-#                              max_df = 0.8,
-#                              sublinear_tf = True,
-#                              use_idf = True,
-#                              vocabulary=vectorizer_vocabulary)
+vectorizer = TfidfVectorizer(tokenizer=tokenize,
+                             min_df = 5,
+                             max_df = 0.8,
+                             sublinear_tf = True,
+                             use_idf = True,
+                             vocabulary=vectorizer_vocabulary)
+print("\n Success recreate vectorizer-----")
+
 # Load the TF-IDF vectorizer
-vectorizer = joblib.load(PATH_VECTORIZER)
+# print("\n Start load vectorizer-----")
+# vectorizer = joblib.load(PATH_VECTORIZER)
+# with open(PATH_VECTORIZER, 'rb') as f:
+#     vectorizer = pickle.load(f)
+# print("\n Success load vectorizer-----")
 
 # Open file json
 with open(PATH_INTENTS, 'r') as f:
